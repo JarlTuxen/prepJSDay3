@@ -1,21 +1,17 @@
 // JavaScript to handle country highlighting and information
 const divmap = document.getElementById("europe-map");
 
-document.getElementById("europe-map").onclick = (evt) => {
+divmap.onclick = (evt) => {
     console.log(evt.target.id);
     fetchAndDisplayCountryInfo(evt.target.id);
-
 };
 
-divmap.onmouseover = highlightCountryByNode;
-divmap.onmouseout = clearHighlightCountryByNode;
+divmap.onmouseover = (evt) => {
+    evt.target.style.fill = "blue";
+};
 
-function highlightCountryByNode(event){
-    event.target.style.fill = "blue";
-}
-
-function clearHighlightCountryByNode(event){
-    event.target.style.fill = "#dcdcdc";
+divmap.onmouseout = (evt) => {
+    evt.target.style.fill = "#dcdcdc";
 }
 
 // Function to display country information
