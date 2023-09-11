@@ -19,8 +19,10 @@ async function fetchAndDisplayCountryInfo(countryId) {
     try {
         const response = await fetch(`https://countries.plaul.dk/api/countries/${countryId}`);
         if (!response.ok) {
-            throw `HTTP error! Status: ${response.status}`;
-            //throw new Error(`HTTP error! Status: ${response.status}`);
+            const errorResponse = await response.json();
+            const error = new Error(errorResponse.message);
+            error.apiError = errorResponse;
+            throw error;
         }
         const data = await response.json();
         const currencies = data.currencies;
@@ -37,7 +39,13 @@ async function fetchAndDisplayCountryInfo(countryId) {
         document.getElementById("fetch-info").innerText = "Country information:";
         document.getElementById("info-box").style.display = "block";
     } catch (error) {
-        console.error("Error fetching country information:", error);
+        if (error.apiError){
+            console.error("Error fetching country information:", error.apiError);
+        }
+        else{
+            console.error(error.message);
+        }
+
         document.getElementById("info-box").style.display = "none";
         document.getElementById("fetch-info").innerText = "Country information not available.";
     }
