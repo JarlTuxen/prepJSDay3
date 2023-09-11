@@ -1,4 +1,4 @@
-// JavaScript to handle country highlighting and information
+//Jarl Tuxen
 const divmap = document.getElementById("europe-map");
 
 divmap.onclick = (evt) => {
@@ -19,7 +19,8 @@ async function fetchAndDisplayCountryInfo(countryId) {
     try {
         const response = await fetch(`https://countries.plaul.dk/api/countries/${countryId}`);
         if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+            throw `HTTP error! Status: ${response.status}`;
+            //throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
         const currencies = data.currencies;
